@@ -174,7 +174,7 @@ def train(rank, epoch, hps, nets, optims, scaler, train_loader, logger, writer):
       # Generator
       y_d_hat_r, y_d_hat_g, fmap_r, fmap_g = net_d(y, y_hat)
       with autocast(enabled=False):
-        loss_mel = F.l1_loss(y_mel[:, :, :-3], y_hat_mel[:, :, :-3]) * hps.train.c_mel
+        loss_mel = F.l1_loss(y_mel, y_hat_mel) * hps.train.c_mel
         logs_p = torch.zeros_like(logs_q)
         if hps.model.use_flow:
           m_p = torch.zeros_like(z_p)
